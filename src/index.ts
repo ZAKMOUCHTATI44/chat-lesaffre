@@ -4,6 +4,7 @@ import { buttonMenu, getMenu, welcomeMessage } from "../options/backToMenu";
 import { sendMessage } from "../utils/nexmo";
 import { Lang } from "@prisma/client";
 import { createOrUpdateLead } from "../services/leadService";
+import { getStep1 } from "../utils/steps";
 require("dotenv").config();
 
 const app = express();
@@ -15,7 +16,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.post("/chat-bot", async (req: Request, res: Response) => {
   let message: MessageRequest = req.body;
-  console.log(message);
+  console.log(JSON.stringify(message));
 
   switch (message.message_type) {
     case "reply":
@@ -46,6 +47,23 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
           phone: message.from,
           profileName: message.profile.name,
         });
+      } else if (id.includes("option")) {
+        let step = id.replace("option", "");
+        switch (step) {
+          case "1":
+            const textReply = await getStep1(message.from);
+            sendMessage({
+              channel: "whatsapp",
+              from: message.to,
+              to: message.from,
+              message_type: "text",
+              text: textReply,
+            });
+            break;
+
+          default:
+            break;
+        }
       }
 
       break;
