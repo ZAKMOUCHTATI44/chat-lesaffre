@@ -8,14 +8,14 @@ const app = express();
 
 app.use(express.json());
 app.get("/", (req: Request, res: Response) => {
-  res.json({ message: "HelloWorld" });
+  res.json({ message: "HelloWorlddakdadbabda" });
 });
 
 app.post("/chat-bot", async (req: Request, res: Response) => {
   let message: MessageRequest = req.body;
   console.log(message);
 
-  
+
   switch (message.message_type) {
     case "reply":
       let { id, title, description } = message?.reply;
@@ -77,4 +77,4 @@ function sendButtonBackToMenu(message: MessageRequest) {
   }, 5000);
 }
 
-app.listen(4000, () => console.log("App Started"));
+app.listen(6000, () => console.log("App Started"));
