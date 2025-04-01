@@ -5,7 +5,7 @@ import prisma from "../prisma/prisma";
 export async function getSteps(lang: Lang): Promise<any> {
   const options = await prisma.messageTemplate.findMany({
     orderBy: {
-      id: "desc",
+      createdAt: "asc",
     },
   });
   const rows = options.map((option) => {
