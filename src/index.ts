@@ -4,6 +4,8 @@ import { buttonMenu, getMenu, welcomeMessage } from "../options/backToMenu";
 import { sendMessage } from "../utils/nexmo";
 import { Lang } from "@prisma/client";
 import { createOrUpdateLead } from "../services/leadService";
+require('dotenv').config()
+
 const app = express();
 
 app.use(express.json());
