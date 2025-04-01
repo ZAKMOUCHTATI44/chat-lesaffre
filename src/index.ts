@@ -16,7 +16,9 @@ app.get("/", (req: Request, res: Response) => {
 
 app.post("/chat-bot", async (req: Request, res: Response) => {
   let message: MessageRequest = req.body;
+  console.log("**************")
   console.log(JSON.stringify(message));
+  console.log("**************")
 
   switch (message.message_type) {
     case "reply":
@@ -59,6 +61,9 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
               message_type: "text",
               text: textReply,
             });
+            setTimeout(() => {
+              sendButtonBackToMenu(message);
+            }, 2500);
             break;
 
           default:
