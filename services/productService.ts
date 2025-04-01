@@ -7,7 +7,7 @@ async function getListProducts(): Promise<any> {
       createdAt: "asc",
     },
   });
-  const rows = options.map((option) => {
+  const rows = options.map((option: any) => {
     const row = {
       id: `product${option.id}`,
       title: " ",
