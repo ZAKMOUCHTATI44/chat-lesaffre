@@ -13,7 +13,7 @@ export function sendMessage(data: MessageRequest, step?: number) {
 
   axios
     .post("https://api.nexmo.com/v1/messages", data, config)
-    .then((res) => {
+    .then((res : any) => {
       saveMessage({
         body: data.text ?? "",
         from: data.from,
@@ -23,7 +23,7 @@ export function sendMessage(data: MessageRequest, step?: number) {
         messageId: res.data.message_uuid ?? "",
       });
     })
-    .catch((error) => {
+    .catch((error : any) => {
       console.error(error);
     });
 }
