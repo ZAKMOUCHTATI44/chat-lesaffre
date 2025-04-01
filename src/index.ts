@@ -3,8 +3,16 @@ import { MessageRequest } from "../types";
 import { buttonMenu, getMenu, welcomeMessage } from "../options/backToMenu";
 import { sendMessage } from "../utils/nexmo";
 import { Lang } from "@prisma/client";
-import { createOrUpdateLead } from "../services/leadService";
-import { getStep1 } from "../utils/steps";
+import { createOrUpdateLead, getLang } from "../services/leadService";
+import {
+  getStep1,
+  getStep5,
+  getStep6,
+  getStep7,
+  step3,
+  step4,
+} from "../utils/steps";
+import { getProductsOptions } from "../services/productService";
 require("dotenv").config();
 
 const app = express();
@@ -16,9 +24,11 @@ app.get("/", (req: Request, res: Response) => {
 
 app.post("/chat-bot", async (req: Request, res: Response) => {
   let message: MessageRequest = req.body;
-  console.log("**************")
+  console.log("**************");
   console.log(JSON.stringify(message));
-  console.log("**************")
+  console.log("**************");
+
+  const LANG = await getLang(message.from);
 
   switch (message.message_type) {
     case "reply":
@@ -53,17 +63,124 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
         let step = id.replace("option", "");
         switch (step) {
           case "1":
-            const textReply = await getStep1(message.from);
             sendMessage({
               channel: "whatsapp",
               from: message.to,
               to: message.from,
               message_type: "text",
-              text: textReply,
+              text: await getStep1(message.from),
             });
             setTimeout(() => {
               sendButtonBackToMenu(message);
             }, 2500);
+            break;
+
+          case "2":
+            console.log(LANG);
+            sendMessage({
+              channel: "whatsapp",
+              from: message.to,
+              to: message.from,
+              message_type: "custom",
+              custom: await getProductsOptions(LANG),
+            });
+            setTimeout(() => {
+              sendButtonBackToMenu(message);
+            }, 2500);
+            break;
+          case "3":
+            sendMessage({
+              channel: "whatsapp",
+              from: message.to,
+              to: message.from,
+              message_type: "custom",
+              custom: await step3(message.from),
+            });
+            setTimeout(() => {
+              sendButtonBackToMenu(message);
+            }, 2500);
+            break;
+          case "4":
+            sendMessage({
+              channel: "whatsapp",
+              from: message.to,
+              to: message.from,
+              message_type: "custom",
+              custom: await step4(message.from),
+            });
+            setTimeout(() => {
+              sendButtonBackToMenu(message);
+            }, 2500);
+            break;
+          case "5":
+            sendMessage({
+              channel: "whatsapp",
+              from: message.to,
+              to: message.from,
+              message_type: "custom",
+              custom: await getStep5(message.from),
+            });
+            setTimeout(() => {
+              sendButtonBackToMenu(message);
+            }, 2500);
+            break;
+          case "6":
+            sendMessage({
+              channel: "whatsapp",
+              from: message.to,
+              to: message.from,
+              message_type: "custom",
+              custom: await getStep6(message.from),
+            });
+            setTimeout(() => {
+              sendButtonBackToMenu(message);
+            }, 2500);
+            break;
+          case "7":
+            sendMessage({
+              channel: "whatsapp",
+              from: message.to,
+              to: message.from,
+              message_type: "custom",
+              custom: await getStep7(message.from),
+            });
+            setTimeout(() => {
+              sendButtonBackToMenu(message);
+            }, 2500);
+            break;
+
+          case "8":
+            sendMessage({
+              channel: "whatsapp",
+              from: message.to,
+              to: message.from,
+              message_type: "custom",
+              custom: {
+                type: "location",
+                location: {
+                  longitude: -4.9830625,
+                  latitude: 34.0261875,
+                  name: "Lesaffre Maroc",
+                  address: "Situé dans : Quartier Industriel Sidi Brahim",
+                },
+              },
+            });
+            sendMessage({
+              channel: "whatsapp",
+              from: message.to,
+              to: message.from,
+              message_type: "custom",
+              custom: {
+                type: "location",
+                location: {
+                  longitude: -7.5774499,
+                  latitude: 33.5989164,
+                  name: "Baking Centre Lesaffre Maroc",
+                  address:
+                    "92, Bd Batali Med Ben Mekki-Ex Gergovie, Casablanca 20100",
+                },
+              },
+            });
             break;
 
           default:

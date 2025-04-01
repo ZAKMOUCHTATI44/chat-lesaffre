@@ -52,6 +52,18 @@ model MessageTemplate {
   @@map("message_templates")
 }
 
+model Product {
+  id        Int    @id @default(autoincrement())
+  name      String
+  contentFr String @db.Text
+  contentAr String @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("products")
+}
+
 enum Lang {
   AR
   FR
