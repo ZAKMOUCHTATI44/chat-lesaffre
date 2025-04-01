@@ -3,8 +3,6 @@ import { saveMessage } from "./messageService";
 import { MessageRequest } from "../types";
 
 export function sendMessage(data: MessageRequest, step?: number) {
-
-  console.log(`TOKEN => ${process.env.NEXMO_ACCESS_TOKEN}`  )
   const config = {
     headers: {
       "Content-Type": "application/json",

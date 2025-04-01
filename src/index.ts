@@ -4,7 +4,7 @@ import { buttonMenu, getMenu, welcomeMessage } from "../options/backToMenu";
 import { sendMessage } from "../utils/nexmo";
 import { Lang } from "@prisma/client";
 import { createOrUpdateLead } from "../services/leadService";
-require('dotenv').config()
+require("dotenv").config();
 
 const app = express();
 
@@ -16,7 +16,6 @@ app.get("/", (req: Request, res: Response) => {
 app.post("/chat-bot", async (req: Request, res: Response) => {
   let message: MessageRequest = req.body;
   console.log(message);
-
 
   switch (message.message_type) {
     case "reply":
@@ -52,16 +51,16 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
       break;
 
     default:
+      sendMessage({
+        channel: "whatsapp",
+        from: message.to,
+        to: message.from,
+        message_type: "custom",
+        custom: welcomeMessage(),
+      });
+
       break;
   }
-
-  sendMessage({
-    channel: "whatsapp",
-    from: message.to,
-    to: message.from,
-    message_type: "custom",
-    custom: welcomeMessage(),
-  });
 
   res.json({ mead: "dbd" });
 });

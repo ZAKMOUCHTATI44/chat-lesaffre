@@ -1,10 +1,13 @@
 import { Lang } from "@prisma/client";
 import { getLang } from "../services/leadService";
-import prisma from "../prisma/prisma"
-
+import prisma from "../prisma/prisma";
 
 export async function getSteps(lang: Lang): Promise<any> {
-  const options = await prisma.messageTemplate.findMany();
+  const options = await prisma.messageTemplate.findMany({
+    orderBy: {
+      id: "desc",
+    },
+  });
   const rows = options.map((option) => {
     const row = {
       id: `option${option.id}`,

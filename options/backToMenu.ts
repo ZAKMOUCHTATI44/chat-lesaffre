@@ -15,7 +15,7 @@ export async function getMenu(lang: Lang) {
       type: "list",
       header: {
         type: "text",
-        text: lang === Lang.AR ? "كارفور" : "Carrefour",
+        text: lang === Lang.AR ? "lesaffre" : "lesaffre",
       },
       body: {
         text: lang === Lang.AR ? body.ar : body.fr,
