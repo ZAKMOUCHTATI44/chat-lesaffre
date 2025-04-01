@@ -13,7 +13,9 @@ app.get("/", (req: Request, res: Response) => {
 
 app.post("/chat-bot", async (req: Request, res: Response) => {
   let message: MessageRequest = req.body;
+  console.log(message);
 
+  
   switch (message.message_type) {
     case "reply":
       let { id, title, description } = message?.reply;
@@ -44,9 +46,9 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
           profileName: message.profile.name,
         });
       }
-      
+
       break;
-  
+
     default:
       break;
   }
