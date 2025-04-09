@@ -1,4 +1,6 @@
 import { getLang } from "../services/leadService";
+import prisma from "../prisma/prisma";
+import { Lang } from "@prisma/client";
 
 // getLang(phone,({lang}) => {
 //     if(lang === "ar") {
@@ -8,15 +10,59 @@ import { getLang } from "../services/leadService";
 //     return callback({text,lang})
 
 // })
-export const getStep1 = async (phone: string): Promise<string> => {
-  const lang = await getLang(phone);
-  let text = `Notre responsable commercial prendra contact avec vous dans les plus proches délais. Merci et à très bientôt!`;
 
-  if (lang === "AR") {
-    text = `سيتصل بك مدير مبيعاتنا في أقرب وقت. شكرًا ونراك قريبًا!`;
-  }
+const getRegons = async () => {
+  const options = await prisma?.region.findMany();
 
-  return text;
+  const rows = options.map((option: any) => {
+    const row = {
+      id: `regions-${option.id}`,
+      title: " ",
+      description: option.name,
+    };
+
+    return row;
+  });
+
+  return rows;
+};
+
+export const getStep1 = async (lang: Lang): Promise<any> => {
+
+  let rows = await getRegons();
+
+  let body = {
+    fr: "Veuillez sélectionner votre région",
+    ar: "الرجاء اختيار منطقتك",
+  };
+
+  let custom = {
+    type: "interactive",
+    interactive: {
+      type: "list",
+      header: {
+        type: "text",
+        text: lang === Lang.AR ? "lesaffre" : "lesaffre",
+      },
+      body: {
+        text: lang === Lang.AR ? body.ar : body.fr,
+      },
+      footer: {
+        text: " ",
+      },
+      action: {
+        button: lang === "AR" ? "خيارات" : "Liste produits",
+        sections: [
+          {
+            title: lang === "AR" ? "اختار:" : "Choisir:",
+            rows,
+          },
+        ],
+      },
+    },
+  };
+
+  return custom;
 };
 
 export const step3 = async (phone: string) => {

@@ -33,7 +33,15 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
   switch (message.message_type) {
     case "reply":
       let { id, title, description } = message?.reply;
-      if (id.includes("btn-lang-fr")) {
+      if (id === "menu-default") {
+        sendMessage({
+          channel: "whatsapp",
+          from: message.to,
+          to: message.from,
+          message_type: "custom",
+          custom: welcomeMessage(),
+        });
+      } else if (id.includes("btn-lang-fr")) {
         sendMessage({
           channel: "whatsapp",
           from: message.to,
@@ -67,8 +75,8 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
               channel: "whatsapp",
               from: message.to,
               to: message.from,
-              message_type: "text",
-              text: await getStep1(message.from),
+              message_type: "custom",
+              custom: await getStep1(LANG),
             });
             setTimeout(() => {
               sendButtonBackToMenu(message);
@@ -76,7 +84,6 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
             break;
 
           case "2":
-            console.log(LANG);
             sendMessage({
               channel: "whatsapp",
               from: message.to,
