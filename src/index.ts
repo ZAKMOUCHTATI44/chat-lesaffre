@@ -76,7 +76,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
           from: message.to,
           to: message.from,
           message_type: "text",
-          text: await getRegoinPhoneNumber(regionId, LANG),
+          text: getRegoinPhoneNumber(regionId, LANG),
         });
         setTimeout(() => {
           sendButtonBackToMenu(message);
