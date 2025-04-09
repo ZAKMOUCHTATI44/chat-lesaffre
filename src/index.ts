@@ -5,6 +5,7 @@ import { sendMessage } from "../utils/nexmo";
 import { Lang } from "@prisma/client";
 import { createOrUpdateLead, getLang } from "../services/leadService";
 import {
+  getRegoinPhoneNumber,
   getStep1,
   getStep5,
   getStep6,
@@ -67,6 +68,20 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
           phone: message.from,
           profileName: message.profile.name,
         });
+      } else if (id.includes("regions")) {
+        const regionId = id.replace("regions-", "");
+
+        sendMessage({
+          channel: "whatsapp",
+          from: message.to,
+          to: message.from,
+          message_type: "text",
+          text: await getRegoinPhoneNumber(regionId, LANG),
+        });
+        setTimeout(() => {
+          sendButtonBackToMenu(message);
+        }, 2500);
+        break;
       } else if (id.includes("option")) {
         let step = id.replace("option", "");
         switch (step) {

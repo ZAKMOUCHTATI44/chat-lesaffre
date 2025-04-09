@@ -11,14 +11,21 @@ import { Lang } from "@prisma/client";
 
 // })
 
+export const getRegoinPhoneNumber = (regionId: string , lang : Lang) => {
+  let text = `Voici le numéro de téléphone de notre commercial dédié à votre région : +212 6 216 860 10`;
+  if (lang === "AR") {
+    let text = `هذا هو رقم هاتف الممثل التجاري المخصص لمنطقتكم: +212 6 216 860 10`;
+  }
+
+  return text;
+};
 const getRegons = async () => {
   const options = await prisma?.region.findMany();
-
   const rows = options.map((option: any) => {
     const row = {
       id: `regions-${option.id}`,
       title: " ",
-      description: option.name,
+      description: option.nom,
     };
 
     return row;
@@ -28,7 +35,6 @@ const getRegons = async () => {
 };
 
 export const getStep1 = async (lang: Lang): Promise<any> => {
-
   let rows = await getRegons();
 
   let body = {
@@ -51,7 +57,7 @@ export const getStep1 = async (lang: Lang): Promise<any> => {
         text: " ",
       },
       action: {
-        button: lang === "AR" ? "خيارات" : "Liste produits",
+        button: lang === "AR" ? "خيارات" : "Liste des régions",
         sections: [
           {
             title: lang === "AR" ? "اختار:" : "Choisir:",
