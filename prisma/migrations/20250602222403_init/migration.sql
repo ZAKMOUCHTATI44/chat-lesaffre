@@ -43,5 +43,28 @@ CREATE TABLE "message_templates" (
     CONSTRAINT "message_templates_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "products" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "contentFr" TEXT NOT NULL,
+    "contentAr" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "products_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Region" (
+    "id" SERIAL NOT NULL,
+    "nom" TEXT NOT NULL,
+    "telephone" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Region_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "leads_phone_key" ON "leads"("phone");
