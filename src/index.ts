@@ -80,8 +80,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
         });
         setTimeout(() => {
           sendButtonBackToMenu(message);
-        }, 2500);
-        break;
+        }, 3500);
       } else if (id.includes("option")) {
         let step = id.replace("option", "");
         switch (step) {
@@ -209,7 +208,6 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
             break;
         }
       }
-
       break;
 
     default:

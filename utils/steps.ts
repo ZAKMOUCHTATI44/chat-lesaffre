@@ -95,13 +95,13 @@ export const step3 = async (phone: string) => {
         text:
           lang === "AR"
             ? "الرجاء اختيار مشكلتك"
-            : "Veuillez sélectionner votre problème",
+            : "Veuillez sélectionner votre option",
       },
       action: {
-        button: lang === "AR" ? "خيارات" : "Type de problèmes",
+        button: lang === "AR" ? "خيارات" : "options",
         sections: [
           {
-            title: lang === "AR" ? "اختار:" : "Type de problèmes",
+            title: lang === "AR" ? "اختار:" : "options",
             rows: rows,
           },
         ],
@@ -140,13 +140,13 @@ export const step4 = async (phone: string) => {
         text:
           lang === "AR"
             ? "الرجاء اختيار مشكلتك"
-            : "Veuillez sélectionner votre problème",
+            : "Veuillez sélectionner votre options",
       },
       action: {
-        button: lang === "AR" ? "خيارات" : "Type de problèmes",
+        button: lang === "AR" ? "خيارات" : "Options",
         sections: [
           {
-            title: lang === "AR" ? "اختار:" : "Type de problèmes",
+            title: lang === "AR" ? "اختار:" : "Options",
             rows: rows,
           },
         ],
