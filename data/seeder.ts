@@ -77,15 +77,13 @@ const produits = [
 
 const regions = [
   { region: "Tanger-Tétouan-Al Hoceïma", telephone: "+212 539 00 11 22" },
-  { region: "L'Oriental", telephone: "+212 536 66 77 88" },
-  { region: "Fès-Meknès", telephone: "+212 535 44 55 66" },
-  { region: "Rabat-Salé-Kénitra", telephone: "+212 537 77 88 99" },
-  { region: "Béni Mellal-Khénifra", telephone: "+212 523 33 44 55" },
-  { region: "Casablanca-Settat", telephone: "+212 522 22 33 44" },
-  { region: "Marrakech-Safi", telephone: "+212 524 44 55 66" },
-  { region: "Drâa-Tafilalet", telephone: "+212 528 88 99 00" },
-  { region: "Souss-Massa", telephone: "+212 528 22 33 44" },
-  { region: "Guelmim-Oued Noun", telephone: "+212 528 66 77 88" },
+  { region: "Zone GHARB", telephone: "+212662764537" },
+  { region: "Zone NORD", telephone: "+212662764537" },
+  { region: "Zone SUD", telephone: "+212673239401" },
+  { region: "Zone SAISS", telephone: "+212661324539" },
+  { region: "Zone ATLAS", telephone: "+212661355097" },
+  { region: "Zone ORIENTALE", telephone: "+212661451032" },
+  { region: "Zone ATLANTIC", telephone: "+212667801989" },
 ];
 
 const createMessageTemplates = async () => {

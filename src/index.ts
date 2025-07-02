@@ -76,11 +76,11 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
           from: message.to,
           to: message.from,
           message_type: "text",
-          text: getRegoinPhoneNumber(regionId, LANG),
+          text: await getRegoinPhoneNumber(regionId, LANG),
         });
-        setTimeout(() => {
-          sendButtonBackToMenu(message);
-        }, 3500);
+        // setTimeout(() => {
+        //   sendButtonBackToMenu(message);
+        // }, 3500);
       } else if (id.includes("option")) {
         let step = id.replace("option", "");
         switch (step) {
@@ -138,8 +138,8 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
               channel: "whatsapp",
               from: message.to,
               to: message.from,
-              message_type: "custom",
-              custom: await getStep5(message.from),
+              message_type: "text",
+              text: await getStep5(message.from),
             });
             setTimeout(() => {
               sendButtonBackToMenu(message);
@@ -150,8 +150,8 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
               channel: "whatsapp",
               from: message.to,
               to: message.from,
-              message_type: "custom",
-              custom: await getStep6(message.from),
+              message_type: "text",
+              text: await getStep6(message.from),
             });
             setTimeout(() => {
               sendButtonBackToMenu(message);
@@ -162,8 +162,8 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
               channel: "whatsapp",
               from: message.to,
               to: message.from,
-              message_type: "custom",
-              custom: await getStep7(message.from),
+              message_type: "text",
+              text: await getStep7(message.from),
             });
             setTimeout(() => {
               sendButtonBackToMenu(message);
@@ -238,4 +238,5 @@ function sendButtonBackToMenu(message: MessageRequest) {
   }, 5000);
 }
 
-app.listen(6000, () => console.log("App Started"));
+const PORT = 6000;
+app.listen(PORT, () => console.log(`App Started ${PORT}`));
