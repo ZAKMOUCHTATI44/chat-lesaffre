@@ -12,18 +12,15 @@ import { Lang } from "@prisma/client";
 // })
 
 export const getRegoinPhoneNumber = async (regionId: string, lang: Lang) => {
-  const region = await prisma.region.findFirst({
-    where: { id: Number(regionId) },
-  });
+  console.log(regionId)
+  // const region = await prisma.region.findFirst({
+  //   where: { id: Number(regionId) },
+  // });
 
-  let text = `Voici le numéro de téléphone de notre commercial dédié à votre région : +212 6 216 860 10`;
-
-  if (region) {
-    text = `Voici le numéro de téléphone de notre commercial dédié à votre région : ${region.telephone}`;
-  }
+  let text = `Veuillez renseigner les détails de votre commande.`;
 
   if (lang === "AR") {
-    let text = `هذا هو رقم هاتف الممثل التجاري المخصص لمنطقتكم: +212 6 216 860 10`;
+    text = "يرجى إدخال تفاصيل طلبك";
   }
 
   return text;
