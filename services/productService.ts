@@ -7,7 +7,9 @@ async function getListProducts(): Promise<any> {
       createdAt: "asc",
     },
   });
-  const rows = options.map((option: any) => {
+
+  console.log(options.length);
+  const rows = options.slice(0, 10).map((option: any) => {
     const row = {
       id: `product${option.id}`,
       title: " ",
@@ -56,3 +58,21 @@ export async function getProductsOptions(lang: Lang) {
 
   return custom;
 }
+
+export const getProductsDetail = async (regionId: string, lang: Lang) => {
+  const product = await prisma.product.findFirst({
+    where: { id: Number(regionId) },
+  });
+
+  let text;
+
+  if (product) {
+    text = product.contentFr;
+
+    if (lang === "AR") {
+      text = product.contentAr;
+    }
+  }
+
+  return text;
+};

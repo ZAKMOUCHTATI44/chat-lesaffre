@@ -13,7 +13,7 @@ import {
   step3,
   step4,
 } from "../utils/steps";
-import { getProductsOptions } from "../services/productService";
+import { getProductsDetail, getProductsOptions } from "../services/productService";
 require("dotenv").config();
 
 const app = express();
@@ -43,8 +43,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
           custom: welcomeMessage(),
         });
       } else if (id.includes("btn-lang-fr")) {
-
-        console.log("BTN FR ")
+        console.log("BTN FR ");
         sendMessage({
           channel: "whatsapp",
           from: message.to,
@@ -100,16 +99,17 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
             break;
 
           case "2":
+            const productList = await getProductsOptions(LANG);
             sendMessage({
               channel: "whatsapp",
               from: message.to,
               to: message.from,
               message_type: "custom",
-              custom: await getProductsOptions(LANG),
+              custom: productList,
             });
             setTimeout(() => {
               sendButtonBackToMenu(message);
-            }, 2500);
+            }, 3000);
             break;
           case "3":
             sendMessage({
@@ -209,6 +209,16 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
           default:
             break;
         }
+      } else if (id.includes("product")) {
+        let productId = id.replace("product", "");
+
+        sendMessage({
+          channel: "whatsapp",
+          from: message.to,
+          to: message.from,
+          message_type: "text",
+          text: await getProductsDetail(productId, LANG),
+        });
       }
       break;
 
