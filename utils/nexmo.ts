@@ -23,6 +23,7 @@ export function sendMessage(data: MessageRequest, step?: number) {
         type: data.message_type,
         messageId: res.data.message_uuid ?? "",
       });
+      console.log(res)
     })
     .catch((error) => {
       console.error(error);
