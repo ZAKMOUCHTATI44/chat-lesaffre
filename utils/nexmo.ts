@@ -1,6 +1,7 @@
 import axios from "axios";
 import { saveMessage } from "./messageService";
 import { MessageRequest } from "../types";
+import { error } from "console";
 
 export function sendMessage(data: MessageRequest, step?: number) {
   const config = {
@@ -23,7 +24,7 @@ export function sendMessage(data: MessageRequest, step?: number) {
         messageId: res.data.message_uuid ?? "",
       });
     })
-    .catch(() => {
-      console.error("error");
+    .catch((error) => {
+      console.error(error);
     });
 }
