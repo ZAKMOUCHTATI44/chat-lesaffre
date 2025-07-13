@@ -43,6 +43,8 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
           custom: welcomeMessage(),
         });
       } else if (id.includes("btn-lang-fr")) {
+
+        console.log("BTN FR ")
         sendMessage({
           channel: "whatsapp",
           from: message.to,
