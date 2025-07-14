@@ -13,7 +13,11 @@ import {
   step3,
   step4,
 } from "../utils/steps";
-import { getProductsDetail, getProductsOptions } from "../services/productService";
+import {
+  getProductsDetail,
+  getProductsOptions,
+} from "../services/productService";
+import { getLastMessage } from "../utils/messageService";
 require("dotenv").config();
 
 const app = express();
@@ -25,12 +29,14 @@ app.get("/", (req: Request, res: Response) => {
 
 app.post("/chat-bot", async (req: Request, res: Response) => {
   let message: MessageRequest = req.body;
-  console.log("**************");
-  console.log(JSON.stringify(message));
-  console.log("**************");
+
 
   const LANG = await getLang(message.from);
 
+  const langMessage = await getLastMessage(message.from);
+  console.log("**************");
+  console.log(JSON.stringify(langMessage));
+  console.log("**************");
   switch (message.message_type) {
     case "reply":
       let { id, title, description } = message?.reply;
