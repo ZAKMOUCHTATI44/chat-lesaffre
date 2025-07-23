@@ -72,6 +72,15 @@ model Region {
   updatedAt DateTime @updatedAt
 }
 
+model Commande {
+  id        Int      @id @default(autoincrement())
+  from      String
+  body      String
+  createdAt DateTime @default(now())
+
+  @@map("commandes") 
+}
+
 enum Lang {
   AR
   FR
