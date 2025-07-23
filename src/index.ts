@@ -3,6 +3,7 @@ import { MessageRequest } from "../types";
 import { buttonMenu, getMenu, welcomeMessage } from "../options/backToMenu";
 import { sendMessage } from "../utils/nexmo";
 import { Lang } from "@prisma/client";
+import prisma from "../prisma/prisma";
 import { createOrUpdateLead, getLang } from "../services/leadService";
 import {
   getRegoinPhoneNumber,
@@ -227,6 +228,38 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
         });
       }
       break;
+    
+    case "text":
+      // Associer le step 99 à la région dans ton flux. Enregistrer un message avec step = 99
+      const last = await getLastMessage(message.from);  
+
+      // tester sur le num de phone ou id region 
+      if (last?.step === 99) {
+        // Enregistre la commande texte
+        if (message.text) {
+          await prisma.commande.create({
+            data: {
+              from: message.from,
+              body: message.text,
+            },
+          });
+        } else {
+          console.warn("❗ message.text est undefined, commande non enregistrée.");
+        }
+
+        // Confirme la réception
+        sendMessage({
+          channel: "whatsapp",
+          from: message.to,
+          to: message.from,
+          message_type: "text",
+          text: LANG === "AR"
+            ? "✅ تم تسجيل طلبك بنجاح."
+            : "✅ Votre commande a été enregistrée avec succès.",
+        });
+
+        sendButtonBackToMenu(message);
+      }
 
     default:
       sendMessage({
