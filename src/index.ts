@@ -42,12 +42,14 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
     case "reply":
       let { id, title, description } = message?.reply;
       if (id === "menu-default") {
+        console.log("menu-default ");
         sendMessage({
           channel: "whatsapp",
           from: message.to,
           to: message.from,
           message_type: "custom",
           custom: welcomeMessage(),
+          text: "Welcome",
         });
       } else if (id.includes("btn-lang-fr")) {
         console.log("BTN FR ");
@@ -57,6 +59,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
           to: message.from,
           message_type: "custom",
           custom: await getMenu(Lang.FR),
+          text: "options FR",
         });
         createOrUpdateLead({
           lang: Lang.FR,
@@ -70,6 +73,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
           to: message.from,
           message_type: "custom",
           custom: await getMenu(Lang.AR),
+          text: "options AR",
         });
         createOrUpdateLead({
           lang: Lang.AR,
@@ -77,6 +81,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
           profileName: message.profile.name,
         });
       } else if (id.includes("regions")) {
+        console.log("Regions ");
         const regionId = id.replace("regions-", "");
 
         sendMessage({
@@ -85,10 +90,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
           to: message.from,
           message_type: "text",
           text: await getRegoinPhoneNumber(regionId, LANG),
-        });
-        // setTimeout(() => {
-        //   sendButtonBackToMenu(message);
-        // }, 3500);
+        },99); 
       } else if (id.includes("option")) {
         let step = id.replace("option", "");
         switch (step) {
@@ -229,12 +231,10 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
       }
       break;
     
-    case "text":
-      // Associer le step 99 à la région dans ton flux. Enregistrer un message avec step = 99
-      const last = await getLastMessage(message.from);  
-
-      // tester sur le num de phone ou id region 
-      if (last?.step === 99) {
+    case "text":  
+      const last = await getLastMessage(message.from); 
+      if ((last?.step === 99) || (last?.body?.includes("Veuillez renseigner les"))) {
+        console.log("creation de la commande"); 
         // Enregistre la commande texte
         if (message.text) {
           await prisma.commande.create({
@@ -243,6 +243,15 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
               body: message.text,
             },
           });
+          
+          sendMessage({
+            channel: "whatsapp",
+            from: message.to,
+            to: message.from,
+            message_type: "text",
+            text: "Commande : " + message.text,
+          });
+
         } else {
           console.warn("❗ message.text est undefined, commande non enregistrée.");
         }
@@ -262,6 +271,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
       }
 
     default:
+      console.log("default"); 
       sendMessage({
         channel: "whatsapp",
         from: message.to,

@@ -12,7 +12,8 @@ import { Lang } from "@prisma/client";
 // })
 
 export const getRegoinPhoneNumber = async (regionId: string, lang: Lang) => {
-  console.log(regionId)
+  console.log("regoin:");
+  console.log(regionId);
   // const region = await prisma.region.findFirst({
   //   where: { id: Number(regionId) },
   // });
