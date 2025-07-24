@@ -77,6 +77,8 @@ model Commande {
   from      String
   body      String
   createdAt DateTime @default(now())
+  region    String? 
+  statut    Int? 
 
   @@map("commandes") 
 }

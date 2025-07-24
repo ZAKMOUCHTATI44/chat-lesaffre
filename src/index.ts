@@ -258,7 +258,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
             message_type: "text",
             text: "Commande : " + message.text,
           });
-
+          sendButtonBackToMenu(message);
         } else {
           console.warn("❗ message.text est undefined, commande non enregistrée.");
         }
@@ -272,9 +272,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
           text: LANG === "AR"
             ? "✅ تم تسجيل طلبك بنجاح."
             : "✅ Votre commande a été enregistrée avec succès.",
-        });
-
-        sendButtonBackToMenu(message);
+        }); 
       }
 
     default:
