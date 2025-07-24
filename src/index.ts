@@ -84,14 +84,14 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
       } else if (id.includes("regions")) {
         console.log("Regions ");
         const regionId = id.replace("regions-", "");
-
+        const regionNumber = Number(regionId);
         sendMessage({
           channel: "whatsapp",
           from: message.to,
           to: message.from,
           message_type: "text",
           text: await getRegoinPhoneNumber(regionId, LANG),
-        }, regionId); 
+        }, regionNumber); 
       } else if (id.includes("option")) {
         let step = id.replace("option", "");
         switch (step) {
