@@ -18,7 +18,7 @@ import {
   getProductsDetail,
   getProductsOptions,
 } from "../services/productService";
-import { getLastMessage } from "../utils/messageService";
+import { getLastMessage, getLastMessageByTo } from "../utils/messageService";
 require("dotenv").config();
 
 const app = express();
@@ -231,10 +231,8 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
       }
       break;
     
-    case "text":  
-      console.log("Step order !!! ");
-      console.log(message.from);
-      const last = await getLastMessage(message.from); 
+    case "text":   
+      const last = await getLastMessageByTo(message.from); 
       console.log("Last message: ");
       console.log(last?.step);
       console.log(last?.body);  
