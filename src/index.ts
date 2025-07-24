@@ -7,6 +7,7 @@ import prisma from "../prisma/prisma";
 import { createOrUpdateLead, getLang } from "../services/leadService";
 import {
   getRegoinPhoneNumber,
+  getRegoinNameById,
   getStep1,
   getStep5,
   getStep6,
@@ -90,7 +91,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
           to: message.from,
           message_type: "text",
           text: await getRegoinPhoneNumber(regionId, LANG),
-        },99); 
+        }, regionId); 
       } else if (id.includes("option")) {
         let step = id.replace("option", "");
         switch (step) {
@@ -236,14 +237,17 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
       console.log("Last message: ");
       console.log(last?.step);
       console.log(last?.body);  
-      if ((last?.step === 99) || (last?.body?.includes("Veuillez renseigner les"))) {
+      if ((last?.step != null) && (last?.body?.includes("Veuillez renseigner les"))) {
         console.log("creation de la commande"); 
         // Enregistre la commande texte
         if (message.text) {
+          const regionName = await getRegoinNameById(last.step);
           await prisma.commande.create({
             data: {
               from: message.from,
               body: message.text,
+              region: regionName, 
+              statut: 0,
             },
           });
           

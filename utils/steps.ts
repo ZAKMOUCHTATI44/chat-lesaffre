@@ -26,6 +26,16 @@ export const getRegoinPhoneNumber = async (regionId: string, lang: Lang) => {
 
   return text;
 };
+
+export const getRegoinNameById = async (regionId: number) => { 
+  const region = await prisma.region.findFirst({
+    where: { id: regionId },
+  });
+
+  return region?.nom;
+};
+
+
 const getRegons = async () => {
   const options = await prisma?.region.findMany();
   const rows = options.map((option: any) => {
