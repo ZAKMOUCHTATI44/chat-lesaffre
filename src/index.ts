@@ -233,6 +233,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
     
     case "text":  
       console.log("Step order !!! ");
+      console.log(message.from);
       const last = await getLastMessage(message.from); 
       console.log("Last message: ");
       console.log(last?.step);
