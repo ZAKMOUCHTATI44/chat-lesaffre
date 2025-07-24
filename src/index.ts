@@ -102,10 +102,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
               to: message.from,
               message_type: "custom",
               custom: await getStep1(LANG),
-            });
-            setTimeout(() => {
-              sendButtonBackToMenu(message);
-            }, 2500);
+            }); 
             break;
 
           case "2":
@@ -119,7 +116,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
             });
             setTimeout(() => {
               sendButtonBackToMenu(message);
-            }, 3000);
+            }, 5000);
             break;
           case "3":
             sendMessage({
@@ -131,7 +128,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
             });
             setTimeout(() => {
               sendButtonBackToMenu(message);
-            }, 2500);
+            }, 5000);
             break;
           case "4":
             sendMessage({
@@ -143,7 +140,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
             });
             setTimeout(() => {
               sendButtonBackToMenu(message);
-            }, 2500);
+            }, 5000);
             break;
           case "5":
             sendMessage({
@@ -155,7 +152,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
             });
             setTimeout(() => {
               sendButtonBackToMenu(message);
-            }, 2500);
+            }, 5000);
             break;
           case "6":
             sendMessage({
@@ -167,7 +164,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
             });
             setTimeout(() => {
               sendButtonBackToMenu(message);
-            }, 2500);
+            }, 5000);
             break;
           case "7":
             sendMessage({
@@ -179,7 +176,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
             });
             setTimeout(() => {
               sendButtonBackToMenu(message);
-            }, 2500);
+            }, 5000);
             break;
 
           case "8":
@@ -251,28 +248,22 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
             },
           });
           
+          // Confirme la réception
           sendMessage({
             channel: "whatsapp",
             from: message.to,
             to: message.from,
             message_type: "text",
-            text: "Commande : " + message.text,
-          });
+            text: LANG === "AR"
+              ? "✅ تم تسجيل طلبك بنجاح."
+              : "✅ Votre commande a été enregistrée avec succès.",
+          }); 
           sendButtonBackToMenu(message);
         } else {
           console.warn("❗ message.text est undefined, commande non enregistrée.");
         }
 
-        // Confirme la réception
-        sendMessage({
-          channel: "whatsapp",
-          from: message.to,
-          to: message.from,
-          message_type: "text",
-          text: LANG === "AR"
-            ? "✅ تم تسجيل طلبك بنجاح."
-            : "✅ Votre commande a été enregistrée avec succès.",
-        }); 
+       
       }
 
     default:
