@@ -49,7 +49,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
           to: message.from,
           message_type: "custom",
           custom: welcomeMessage(),
-          text: "Welcome",
+          //text: "Welcome",
         });
       } else if (id.includes("btn-lang-fr")) {
         console.log("BTN FR ");
@@ -59,7 +59,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
           to: message.from,
           message_type: "custom",
           custom: await getMenu(Lang.FR),
-          text: "options FR",
+          //text: "options FR",
         });
         createOrUpdateLead({
           lang: Lang.FR,
@@ -73,7 +73,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
           to: message.from,
           message_type: "custom",
           custom: await getMenu(Lang.AR),
-          text: "options AR",
+          //text: "options AR",
         });
         createOrUpdateLead({
           lang: Lang.AR,
