@@ -232,7 +232,11 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
       break;
     
     case "text":  
+      console.log("Step order !!! ");
       const last = await getLastMessage(message.from); 
+      console.log("Last message: ");
+      console.log(last?.step);
+      console.log(last?.body);  
       if ((last?.step === 99) || (last?.body?.includes("Veuillez renseigner les"))) {
         console.log("creation de la commande"); 
         // Enregistre la commande texte
