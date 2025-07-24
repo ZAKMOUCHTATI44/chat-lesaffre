@@ -27,6 +27,20 @@ export async function getLastMessage(phone: string): Promise<Message | null> {
   return message;
 }
 
+export async function getLastMessageByTo(phone: string): Promise<Message | null> {
+  const message = await prisma.message.findFirst({
+    where: {
+      to: phone,
+    },
+    orderBy: {
+      id: "desc",
+    },
+    take: 1,
+  });
+
+  return message;
+}
+
 export async function saveMessage(data: MessageRequest): Promise<Message> {
   const message = await prisma.message.create({
     data: {
