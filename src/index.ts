@@ -234,7 +234,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
       console.log("Last message: ");
       console.log(last?.step);
       console.log(last?.body);  
-      if ((last?.step != null) && (last?.body?.includes("Veuillez renseigner les"))) {
+      if (last?.step != null) {
         console.log("creation de la commande"); 
         // Enregistre la commande texte
         if (message.text) {
