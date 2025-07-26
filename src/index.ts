@@ -238,15 +238,32 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
         console.log("creation de la commande"); 
         // Enregistre la commande texte
         if (message.text) {
-          const regionName = await getRegoinNameById(last.step);
-          await prisma.commande.create({
-            data: {
+          const regionInfo = await getRegoinNameById(last.step);
+          if (regionInfo) {
+            const { nom, telephone } = regionInfo;
+            
+            await prisma.commande.create({
+              data: {
+                from: message.from,
+                body: message.text,
+                region: nom, 
+                statut: 0,
+              },
+            });
+
+            // Envoi message au commmercial
+            sendMessage({
+              channel: "whatsapp",
               from: message.from,
-              body: message.text,
-              region: regionName, 
-              statut: 0,
-            },
-          });
+              to: telephone,
+              message_type: "text",
+              text: `🛒 Une nouvelle commande de ${message.from}.
+              Voici le détail de la commande : ${message.text}`,
+            });
+
+          }else {
+            console.warn("❗ Région introuvable.");
+          }
           
           // Confirme la réception
           sendMessage({

@@ -30,9 +30,13 @@ export const getRegoinPhoneNumber = async (regionId: string, lang: Lang) => {
 export const getRegoinNameById = async (regionId: number) => { 
   const region = await prisma.region.findFirst({
     where: { id: regionId },
+    select: {
+      nom: true,
+      telephone: true,
+    },
   });
 
-  return region?.nom;
+  return region ? { nom: region.nom, telephone: region.telephone } : null;
 };
 
 
