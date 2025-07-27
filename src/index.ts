@@ -26,7 +26,14 @@ const app = express();
 
 app.use(express.json());
 app.get("/", (req: Request, res: Response) => {
-  res.json({ message: "HelloWorlddakdadbabda" });
+    sendMessage({
+      channel: "whatsapp",
+      from: "212719927588",
+      to: "212614756037",
+      message_type: "text",
+      text: "commande ok de teste",
+    });
+  res.json({ message: "HelloWorlddakdadbabdahhh" });
 });
 
 app.post("/chat-bot", async (req: Request, res: Response) => {
@@ -241,7 +248,8 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
           const regionInfo = await getRegoinNameById(last.step);
           if (regionInfo) {
             const { nom, telephone } = regionInfo;
-            
+            console.log(message.from);
+            console.log(telephone);
             await prisma.commande.create({
               data: {
                 from: message.from,
@@ -254,7 +262,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
             // Envoi message au commmercial
             sendMessage({
               channel: "whatsapp",
-              from: message.from,
+              from: "212719927588",
               to: telephone,
               message_type: "text",
               text: `🛒 Une nouvelle commande de ${message.from}.
