@@ -26,14 +26,7 @@ const app = express();
 
 app.use(express.json());
 app.get("/", (req: Request, res: Response) => {
-    sendMessage({
-      channel: "whatsapp",
-      from: "212719927588",
-      to: "212614756037",
-      message_type: "text",
-      text: "commande ok de teste",
-    });
-  res.json({ message: "HelloWorlddakdadbabdahhh" });
+  res.json({ message: "HelloWorlddakdadbabda" });
 });
 
 app.post("/chat-bot", async (req: Request, res: Response) => {
@@ -248,8 +241,6 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
           const regionInfo = await getRegoinNameById(last.step);
           if (regionInfo) {
             const { nom, telephone } = regionInfo;
-            console.log(message.from);
-            console.log(telephone);
             await prisma.commande.create({
               data: {
                 from: message.from,
@@ -265,9 +256,11 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
               from: "212719927588",
               to: telephone,
               message_type: "text",
-              text: `🛒 Une nouvelle commande de ${message.from}.
+              text: `🛒 Une nouvelle commande pour la région de ${nom} de ${message.from}.
               Voici le détail de la commande : ${message.text}`,
             });
+
+             
 
           }else {
             console.warn("❗ Région introuvable.");
