@@ -260,11 +260,11 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
               Voici le détail de la commande : ${message.text}`,
             });
 
-             // Envoi message de test 
+             // Envoi message de copie 
             sendMessage({
               channel: "whatsapp",
               from: "212719927588",
-              to: "212614756037",
+              to: "212661701809",
               message_type: "text",
               text: `🛒 Une nouvelle commande pour la région de ${nom} de ${message.from}.
               Voici le détail de la commande : ${message.text}`,
