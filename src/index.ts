@@ -280,7 +280,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
                 ? "✅ تم تسجيل طلبك بنجاح."
                 : "✅ Votre commande a été enregistrée avec succès.",
             }); 
-
+            //sendButtonBackToMenu(message);
           }else {
             console.warn("ajouter une réclamation.");
             // ajoute code save reclamation avec controlle stepp = 555 
@@ -301,10 +301,9 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
                 ? "✅  تم تسجيل شكواك بنجاح. شكرًا لك"
                 : "✅ Votre réclamation a été enregistrée avec succès. Merci.",
             }); 
+            // sendButtonBackToMenu(message);
           }
           
-         
-          sendButtonBackToMenu(message);
         } else {
           console.warn("❗ message.text est undefined, commande non enregistrée.");
         }
