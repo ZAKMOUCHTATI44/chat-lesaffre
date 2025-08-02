@@ -182,7 +182,7 @@ export const getStep5 = async (phone: string): Promise<string> => {
   let text = `Merci de nous partager vos coordonnées ainsi que le motif de réclamation pour que l'équipe en charge puisse vous contacter et vous apporter l'aide nécessaire.`;
 
   if (lang === "AR") {
-    text = `شكرًا لمشاركتكم معلومات الاتصال الخاصة بكم. سيتم التواصل معكم في أقرب وقت من قبل الفريق`;
+    text = `يرجى مشاركة بيانات الاتصال الخاصة بك وسبب شكواك حتى يتمكن الفريق المسؤول من الاتصال بك وتقديم المساعدة اللازمة.`;
   }
 
   return text;

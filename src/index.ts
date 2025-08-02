@@ -150,9 +150,6 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
               message_type: "text",
               text: await getStep5(message.from),
             }, 555);
-            setTimeout(() => {
-              sendButtonBackToMenu(message);
-            }, 5000);
             break;
           case "6":
             sendMessage({
