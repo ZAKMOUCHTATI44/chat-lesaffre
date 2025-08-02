@@ -83,6 +83,17 @@ model Commande {
   @@map("commandes") 
 }
 
+model Reclamation {
+  id        Int      @id @default(autoincrement())
+  phone     String
+  content   String 
+  statut    Int? 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt 
+
+  @@map("reclamations") 
+}
+
 enum Lang {
   AR
   FR

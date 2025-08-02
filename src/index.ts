@@ -149,7 +149,7 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
               to: message.from,
               message_type: "text",
               text: await getStep5(message.from),
-            });
+            }, 555);
             setTimeout(() => {
               sendButtonBackToMenu(message);
             }, 5000);
@@ -270,22 +270,40 @@ app.post("/chat-bot", async (req: Request, res: Response) => {
               Voici le détail de la commande : ${message.text}`,
             });
 
-             
+            // Confirme la réception
+            sendMessage({
+              channel: "whatsapp",
+              from: message.to,
+              to: message.from,
+              message_type: "text",
+              text: LANG === "AR"
+                ? "✅ تم تسجيل طلبك بنجاح."
+                : "✅ Votre commande a été enregistrée avec succès.",
+            }); 
 
           }else {
-            console.warn("❗ Région introuvable.");
+            console.warn("ajouter une réclamation.");
+            // ajoute code save reclamation avec controlle stepp = 555 
+            await prisma.reclamation.create({
+              data: {
+                phone: message.from,
+                content: message.text, 
+                statut: 0,
+              },
+            });
+              // Confirme la réception
+            sendMessage({
+              channel: "whatsapp",
+              from: message.to,
+              to: message.from,
+              message_type: "text",
+              text: LANG === "AR"
+                ? "✅  تم تسجيل شكواك بنجاح. شكرًا لك"
+                : "✅ Votre réclamation a été enregistrée avec succès. Merci.",
+            }); 
           }
           
-          // Confirme la réception
-          sendMessage({
-            channel: "whatsapp",
-            from: message.to,
-            to: message.from,
-            message_type: "text",
-            text: LANG === "AR"
-              ? "✅ تم تسجيل طلبك بنجاح."
-              : "✅ Votre commande a été enregistrée avec succès.",
-          }); 
+         
           sendButtonBackToMenu(message);
         } else {
           console.warn("❗ message.text est undefined, commande non enregistrée.");
